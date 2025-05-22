@@ -1,0 +1,110 @@
+{Model : listing
+-title
+-description
+-image : 
+         set : (v) => v === " " ? "default link" : v, // means if client posted the image of the locaiton but there is no link or some glich from client side than post it other wise use that deault link image in that
+-price
+-location
+-country
+
+index route == here we are accepting get request in /listing in which we will return all listing
+
+Read : Show Route
+      GET /listing/:id -> all data will be returned of this perticular id
+
+
+
+
+Create : New & Create Route      
+
+
+
+
+Update : Edit & Update Route
+                 GET /listings/:id/edit   -> edit from -> submit
+                 PUT /listings/:id
+
+
+
+Delete : Delete Route
+                    DELETE /listings/:id}this was all about routing and 
+                    connecting to db and the backend part.
+
+
+
+
+ NOW WE ARE MOVING TO THE STYLING parT 
+    what is EJS Mate?
+    it is also used to make templates same as EJS
+    but this is used to make styling templates as such
+    the navbar can be used multiple times so 
+    we can make a template of it.                   
+
+
+
+
+
+
+
+    Create a Navbar
+
+
+
+
+
+
+FORM VALIDATION      -------      this is for client side
+when we enter data in the form , the browser and / or the web server will check to see that the dat is in the correct format and within the constraints set by the application.    
+set of rules set by us in the form are called form validation
+
+validation can be of two types
+1.client side -> data send by frontent to backend should be in proper format and correct
+2.server side -> this ensures tht the data is getting stored is as per the db(schema) / and if any error comes when doing the work than we should handle the errors in good manner.
+
+
+
+Success and Failure text
+
+success means all the validations passed as per the form
+Failure meand valition fails
+
+if we dont do the server side validaitons than 
+if someone used postman or hopscotch like services to api call in /listings and send sime request likepost,get,etc 
+than the incorrect information can goes to the backend
+therfore server side validations are necesrary
+
+
+
+
+CUSTOM ERROR HANDLER
+
+there are some loopholes in the code as an eg: some one send price as a string from frontendt or form hopscotch
+than errror will come and those type of things are not acceptable
+and the coming errors would be asynchrounus
+
+
+deffine middleware for handling that error
+
+Custom ExrpessError
+
+validations for schema
+joi is the tool that helps to validate schema
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+HANDLING DELETION
+using mongoose middleware 
+we can use 2 middleware :
+.Pre - run before the query is executed
+.Post - run after the query is executed
+
+
+customerSchema.post("findOneAndDelete" , async(customer) => {
+      if(customer.orders.length) {
+            let res = await Order.deleteMany({_id : {$in : customer.orders}});
+            console.log(res);
+      }
+});
